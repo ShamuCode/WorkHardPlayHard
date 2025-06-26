@@ -1,0 +1,35 @@
+{
+    "manifest_version": 3,
+    "name": "WorkHardPlayHard",
+    "version": "1.0",
+    "description": "Extension pour aider à se concentrer en bloquant certains sites.",
+    "permissions": [
+      "storage",
+      "webNavigation",
+      "tabs"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+      }
+    },
+    "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    },
+    "web_accessible_resources": [{
+      "resources": ["blocked.html", "styles.css", "blocked.js", "img/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["img/*.jpg", "img/*.png", "img/*.gif"],
+      "matches": ["<all_urls>"]
+    }]
+  }
