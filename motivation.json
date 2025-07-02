@@ -1,4 +1,5 @@
 {
+  "fr": {
     "phrases_motivation": [
       "Tu es capable de grandes choses, crois en toi !",
       "Chaque jour est une nouvelle opportunité de progresser.",
@@ -9,22 +10,21 @@
       "Rien n’est impossible à qui ose, travaille et n’abandonne jamais.",
       "Le succès commence par la confiance en soi.",
       "Tu es plus fort(e) que tu ne le penses.",
-      "Chaque échec est une leçon vers la réussite.",
-      "Ose sortir de ta zone de confort.",
-      "Crois en tes rêves et travaille dur pour les réaliser.",
-      "Le meilleur moment pour commencer, c’est maintenant.",
-      "Sois fier(e) de chaque progrès, aussi petit soit-il.",
-      "Ta détermination t’ouvrira toutes les portes.",
-      "Le courage, c’est d’avancer même quand c’est difficile.",
-      "Tu as déjà surmonté tant d’obstacles, continue !",
-      "La réussite appartient à ceux qui persévèrent.",
-      "Fais de ta passion ta motivation quotidienne.",
-      "Chaque effort compte, ne minimise jamais tes actions.",
-      "Tu es l’architecte de ton avenir.",
-      "Visualise ta réussite et avance vers elle chaque jour.",
-      "Rappelle-toi pourquoi tu as commencé.",
-      "Entoure-toi de personnes positives et inspirantes.",
-      "Aujourd’hui, fais un pas de plus vers tes objectifs."
+      "Chaque échec est une leçon vers la réussite."
+    ]
+  },
+  "en": {
+    "phrases_motivation": [
+      "You are capable of great things, believe in yourself!",
+      "Every day is a new opportunity to improve.",
+      "Never give up, efforts always pay off.",
+      "Small steps lead to big victories.",
+      "Your perseverance is your greatest strength.",
+      "Challenges are opportunities to surpass yourself.",
+      "Nothing is impossible for those who dare, work, and never give up.",
+      "Success begins with self-confidence.",
+      "You are stronger than you think.",
+      "Every failure is a lesson towards success."
     ]
   }
-  
+}

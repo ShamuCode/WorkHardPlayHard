@@ -16,20 +16,18 @@ function isInternalChromePage(url) {
 }
 
 function isEmbeddedContent(url) {
-  return url.includes("/embed/"); // Vérifie si l'URL correspond à un contenu intégré
+  return url.includes("/embed/");
 }
 
-// Bloquer les sites non autorisés lors de la mise à jour de l'URL d'un onglet
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.url) {
-    if (isInternalChromePage(changeInfo.url) || isEmbeddedContent(changeInfo.url)) return; // Exclure les pages internes et les contenus intégrés
+    if (isInternalChromePage(changeInfo.url) || isEmbeddedContent(changeInfo.url)) return
 
     chrome.storage.local.get(["enabled", "whitelist"], ({ enabled, whitelist = [] }) => {
       if (!enabled) return;
       const domain = getMainDomain(changeInfo.url);
       if (!domain) return;
 
-      // Bloquer uniquement si l'onglet est actif et visible
       chrome.tabs.get(tabId, (tab) => {
         if (tab.active && !whitelist.includes(domain)) {
           const blockedPage = chrome.runtime.getURL("blocked.html") + "?blockedUrl=" + encodeURIComponent(changeInfo.url);
@@ -40,11 +38,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
-// Bloquer les sites non autorisés lors de la navigation principale
 chrome.webNavigation.onBeforeNavigate.addListener(({ url, tabId, frameId }) => {
-  if (frameId !== 0) return; // Ignorer les contenus intégrés
-  if (isInternalChromePage(url) || isEmbeddedContent(url)) return; // Exclure les pages internes et les contenus intégrés
-
+  if (frameId !== 0) return; 
+  if (isInternalChromePage(url) || isEmbeddedContent(url)) return;
   chrome.storage.local.get(["enabled", "whitelist"], ({ enabled, whitelist = [] }) => {
     if (!enabled) return;
     const domain = getMainDomain(url);

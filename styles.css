@@ -159,7 +159,6 @@ input:checked+.slider:before {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .add-whitelist {
   margin-top: 20px;
 }
@@ -176,5 +175,12 @@ input:checked+.slider:before {
   font-family: 'Oswald', sans-serif;
   font-size: 5em;
   margin-bottom: 20px;
+  text-align: center;
+}
+
+.image-credit {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #ccc;
   text-align: center;
 }

@@ -19,10 +19,15 @@ function getBlockedUrl() {
 function getRandomImage() {
   fetch('./img/list.json')
     .then(response => response.json())
-    .then(image => {
-      const image_list = image.images;
-      const randomImage = `./img/` + image_list[Math.floor(Math.random() * image_list.length)];
-      document.querySelector("img").src = randomImage;
+    .then(data => {
+      const imageList = data.images;
+      const randomImage = imageList[Math.floor(Math.random() * imageList.length)];
+
+      const imgElement = document.querySelector("img");
+      imgElement.src = `${randomImage.file}`;
+
+      const creditElement = document.querySelector(".image-credit");
+      creditElement.textContent = randomImage.credit;
     })
     .catch(error => console.error('Error loading images:', error));
 }
@@ -31,34 +36,57 @@ function getRandomMotivationPhrase() {
   fetch('./motivation.json')
     .then(response => response.json())
     .then(data => {
-      const phrases = data.phrases_motivation;
+      const phrases = data["en"].phrases_motivation; 
       const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
       document.querySelector(".blocked-title").textContent = randomPhrase;
     })
-    .catch(error => console.error('Erreur lors du chargement des phrases de motivation :', error));
+    .catch(error => console.error('Error while loading motivation phrase', error));
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  getRandomImage();
-  getRandomMotivationPhrase();
+  chrome.storage.local.get("blockedSettings", ({ blockedSettings }) => {
+    const showMotivation = blockedSettings?.showMotivation ?? true;
+    const showImage = blockedSettings?.showImage ?? true;
+
+    if (showImage) {
+      getRandomImage();
+    } else {
+      document.querySelector("img").style.display = "none";
+    }
+
+    if (showMotivation) {
+      getRandomMotivationPhrase();
+    } else {
+      document.querySelector(".blocked-title").textContent = "";
+    }
+  });
 });
 
 document.getElementById("addWhitelistBtn").addEventListener("click", () => {
   const blockedUrl = getBlockedUrl();
-  if (!blockedUrl) return alert("URL bloquée introuvable.");
+  if (!blockedUrl) return alert("Error: Blocked URL not found");
 
   const domain = getMainDomain(blockedUrl);
-  if (!domain) return alert("Impossible d'extraire le domaine.");
+  if (!domain) return alert("Error: Unable to extract domain");
 
   chrome.storage.local.get("whitelist", ({ whitelist = [] }) => {
     if (whitelist.includes(domain)) {
-      alert("Site déjà dans la liste blanche.");
+      alert("Error: Site already in the whitelist");
       return;
     }
     whitelist.push(domain);
     chrome.storage.local.set({ whitelist }, () => {
-      alert("Site ajouté à la liste blanche !");
+      alert("Site added to the whitelist!");
       window.location.href = blockedUrl;
     });
+  });
+});
+
+document.getElementById("disableModeBtn").addEventListener("click", () => {
+  const blockedUrl = getBlockedUrl();
+  if (!blockedUrl) return alert("Error: Blocked URL not found");
+  chrome.storage.local.set({ enabled: false }, () => {
+    alert("Focus mode off !");
+    window.location.href = blockedUrl;
   });
 });

@@ -14,19 +14,34 @@
       <input type="checkbox" id="toggleFilter" />
       <span class="slider"></span>
     </label>
-    <label for="toggleFilter">Mode concentration</label>
+    <label for="toggleFilter">Focus mode</label>
 
     <hr />
 
-    <button id="addCurrentSiteBtn">Ajouter ce site à la whitelist</button>
+    <button id="addCurrentSiteBtn">Add this website to the whitelist</button>
 
     <hr />
 
-    <h2>Sites autorisés (whitelist)</h2>
+    <h2>Allowed websites (whitelist)</h2>
     <ul id="whitelist"></ul>
 
     <input type="text" id="manualInput" placeholder="Ajouter un domaine ou URL manuellement" />
-    <button id="addManualBtn">Ajouter</button>
+    <button id="addManualBtn">Add</button>
+
+    <hr />
+
+    <!--<h2>Importer & Exporter</h2>-->
+    <h3>Import (delete the actual whitelist)</h3>
+    <input type="file" id="importWhitelistInput" accept=".json" />
+    <h3>Export</h3>
+    <button id="exportWhitelistBtn">Export the whitelist</button>
+
+    <hr />
+
+    <h3>Settings of the page</h3>
+    <label for="blockedImage">Display a random image:</label>
+    <input type="checkbox" id="blockedImage" />
+    <button id="saveBlockedSettings">Save the settings</button>
   </div>
 
   <script src="popup.js"></script>
