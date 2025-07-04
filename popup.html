@@ -18,23 +18,35 @@
 
     <hr />
 
-    <button id="addCurrentSiteBtn">Add this website to the whitelist</button>
+    <button id="addCurrentSiteWBtn">Add this website to the whitelist</button>
+    <button id="addCurrentSiteBBtn" style="background-color: #000;">Add this website to the blacklist</button>
 
     <hr />
 
     <h2>Allowed websites (whitelist)</h2>
     <ul id="whitelist"></ul>
 
-    <input type="text" id="manualInput" placeholder="Ajouter un domaine ou URL manuellement" />
+    <input type="text" id="manualInput" placeholder="Add a domain or URL manually" />
     <button id="addManualBtn">Add</button>
 
     <hr />
 
+    <h2>Blocked websites (blacklist)</h2>
+    <ul id="blacklist"></ul>
+    <input type="text" id="manualBlacklistInput" placeholder="Add a domain or URL manually" />
+    <button id="addBlacklistBtn" style="background-color: #000">Add</button>
+
+    <hr />
+
     <!--<h2>Importer & Exporter</h2>-->
-    <h3>Import (delete the actual whitelist)</h3>
+    <h3>Import (delete the actual list)</h3>
+    <h4>Whitelist</h4>
     <input type="file" id="importWhitelistInput" accept=".json" />
+    <h4>Blacklist</h4>
+    <input type="file" id="importBlacklistInput" accept=".json" />
     <h3>Export</h3>
     <button id="exportWhitelistBtn">Export the whitelist</button>
+    <button id="exportBlacklistBtn" style="background-color: #000">Export the blacklist</button>
 
     <hr />
 

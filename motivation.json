@@ -1,20 +1,6 @@
 {
-  "fr": {
-    "phrases_motivation": [
-      "Tu es capable de grandes choses, crois en toi !",
-      "Chaque jour est une nouvelle opportunité de progresser.",
-      "N’abandonne jamais, les efforts finissent toujours par payer.",
-      "Les petits pas mènent aux grandes victoires.",
-      "Ta persévérance est ta plus grande force.",
-      "Les défis sont des chances de te surpasser.",
-      "Rien n’est impossible à qui ose, travaille et n’abandonne jamais.",
-      "Le succès commence par la confiance en soi.",
-      "Tu es plus fort(e) que tu ne le penses.",
-      "Chaque échec est une leçon vers la réussite."
-    ]
-  },
   "en": {
-    "phrases_motivation": [
+    "motivation": [
       "You are capable of great things, believe in yourself!",
       "Every day is a new opportunity to improve.",
       "Never give up, efforts always pay off.",

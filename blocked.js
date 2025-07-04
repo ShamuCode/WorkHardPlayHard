@@ -36,7 +36,7 @@ function getRandomMotivationPhrase() {
   fetch('./motivation.json')
     .then(response => response.json())
     .then(data => {
-      const phrases = data["en"].phrases_motivation; 
+      const phrases = data["en"].motivation; 
       const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
       document.querySelector(".blocked-title").textContent = randomPhrase;
     })
@@ -58,6 +58,24 @@ document.addEventListener("DOMContentLoaded", () => {
       getRandomMotivationPhrase();
     } else {
       document.querySelector(".blocked-title").textContent = "";
+    }
+  });
+
+  const blockedUrl = getBlockedUrl();
+  if (!blockedUrl) return;
+
+  const domain = getMainDomain(blockedUrl);
+  if (!domain) return;
+
+  chrome.storage.local.get("blacklist", ({ blacklist = [] }) => {
+    const isBlacklisted = blacklist.includes(domain);
+
+    const addWhitelistBtn = document.getElementById("addWhitelistBtn");
+    const disableModeBtn = document.getElementById("disableModeBtn");
+
+    if (isBlacklisted) {
+      addWhitelistBtn.style.display = "none";
+      disableModeBtn.style.display = "none";
     }
   });
 });

@@ -39,18 +39,24 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 chrome.webNavigation.onBeforeNavigate.addListener(({ url, tabId, frameId }) => {
-  if (frameId !== 0) return; 
-  if (isInternalChromePage(url) || isEmbeddedContent(url)) return;
-  chrome.storage.local.get(["enabled", "whitelist"], ({ enabled, whitelist = [] }) => {
-    if (!enabled) return;
+  if (frameId !== 0) return;
+  if (isInternalChromePage(url) || isEmbeddedContent(url)) return; 
+
+  chrome.storage.local.get(["enabled", "whitelist", "blacklist"], ({ enabled, whitelist = [], blacklist = [] }) => {
     const domain = getMainDomain(url);
     if (!domain) return;
 
-    chrome.tabs.get(tabId, (tab) => {
-      if (tab.active && !whitelist.includes(domain)) {
-        const blockedPage = chrome.runtime.getURL("blocked.html") + "?blockedUrl=" + encodeURIComponent(url);
-        chrome.tabs.update(tabId, { url: blockedPage });
-      }
-    });
+    if (blacklist.includes(domain)) {
+      const blockedPage = chrome.runtime.getURL("blocked.html") + "?blockedUrl=" + encodeURIComponent(url);
+      chrome.tabs.update(tabId, { url: blockedPage });
+      return;
+    }
+
+    if (!enabled) return;
+
+    if (!whitelist.includes(domain)) {
+      const blockedPage = chrome.runtime.getURL("blocked.html") + "?blockedUrl=" + encodeURIComponent(url);
+      chrome.tabs.update(tabId, { url: blockedPage });
+    }
   });
 });

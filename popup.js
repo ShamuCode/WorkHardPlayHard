@@ -45,6 +45,36 @@ function renderWhitelist(whitelist) {
   });
 }
 
+function renderBlacklist(blacklist) {
+  const ul = document.getElementById("blacklist");
+  ul.innerHTML = "";
+  blacklist.forEach(domain => {
+    const li = document.createElement("li");
+    li.textContent = domain;
+
+    const btn = document.createElement("button");
+    btn.textContent = "✕";
+    btn.style.marginLeft = "10px";
+    btn.style.background = "transparent";
+    btn.style.border = "none";
+    btn.style.color = "#d32f2f";
+    btn.style.cursor = "pointer";
+    btn.title = "Delete this domain";
+
+    btn.addEventListener("click", () => {
+      chrome.storage.local.get("blacklist", ({ blacklist = [] }) => {
+        const newList = blacklist.filter(d => d !== domain);
+        chrome.storage.local.set({ blacklist: newList }, () => {
+          renderBlacklist(newList);
+        });
+      });
+    });
+
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+}
+
 function updateToggle(checked) {
   const toggle = document.getElementById("toggleFilter");
   toggle.checked = checked;
@@ -70,17 +100,35 @@ function addDomain(urlOrDomain) {
   });
 }
 
+function addToBlacklist(domain) {
+  chrome.storage.local.get("blacklist", ({ blacklist = [] }) => {
+    if (blacklist.includes(domain)) {
+      alert("Website already in blacklist");
+      return;
+    }
+    blacklist.push(domain);
+    chrome.storage.local.set({ blacklist }, () => {
+      renderBlacklist(blacklist);
+      document.getElementById("manualBlacklistInput").value = "";
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.local.get(["enabled", "whitelist"], ({ enabled = false, whitelist = [] }) => {
     updateToggle(enabled);
     renderWhitelist(whitelist);
   });
 
+  chrome.storage.local.get("blacklist", ({ blacklist = [] }) => {
+    renderBlacklist(blacklist);
+  });
+
   document.getElementById("toggleFilter").addEventListener("change", (e) => {
     chrome.storage.local.set({ enabled: e.target.checked });
   });
 
-  document.getElementById("addCurrentSiteBtn").addEventListener("click", () => {
+  document.getElementById("addCurrentSiteWBtn").addEventListener("click", () => {
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (tabs.length === 0) return;
       const url = tabs[0].url;
@@ -88,9 +136,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  document.getElementById("addCurrentSiteBBtn").addEventListener("click", () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs.length === 0) return;
+      const url = tabs[0].url;
+      const domain = getMainDomain(url);
+      if (!domain) {
+        alert("Invalid URL or domain");
+        return;
+      }
+      addToBlacklist(domain);
+    });
+  });
+
   document.getElementById("addManualBtn").addEventListener("click", () => {
     const input = document.getElementById("manualInput");
     addDomain(input.value);
+  });
+
+  document.getElementById("addBlacklistBtn").addEventListener("click", () => {
+    const input = document.getElementById("manualBlacklistInput");
+    addToBlacklist(input.value);
   });
 
   document.getElementById("exportWhitelistBtn").addEventListener("click", () => {
@@ -100,6 +166,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const a = document.createElement("a");
       a.href = url;
       a.download = "whitelist.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  });
+
+  document.getElementById("exportBlacklistBtn").addEventListener("click", () => {
+    chrome.storage.local.get("blacklist", ({ blacklist = [] }) => {
+      const blob = new Blob([JSON.stringify({ blacklist }, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "blacklist.json";
       a.click();
       URL.revokeObjectURL(url);
     });
@@ -123,6 +201,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (error) {
         alert("Error importing whitelist.");
+      }
+    };
+    reader.readAsText(file);
+  });
+
+  document.getElementById("importBlacklistInput").addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (Array.isArray(data.blacklist)) {
+          chrome.storage.local.set({ blacklist: data.blacklist }, () => {
+            alert("Blacklist imported successfully!");
+            renderBlacklist(data.blacklist);
+          });
+        } else {
+          alert("Invalid file format.");
+        }
+      } catch (error) {
+        alert("Error importing blacklist.");
       }
     };
     reader.readAsText(file);
