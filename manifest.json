@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "WorkHardPlayHard",
-    "version": "1.0",
-    "description": "Extension pour aider à se concentrer en bloquant certains sites.",
+    "version": "0.4",
+    "description": "WorkHardPlayHard is a Chrome extension designed to help users stay focused by blocking access to distracting websites. It also allows managing a whitelist of allowed sites and displays motivational messages to encourage productivity.",
     "permissions": [
       "storage",
       "webNavigation",
@@ -14,15 +14,15 @@
     "action": {
       "default_popup": "popup.html",
       "default_icon": {
-        "16": "icon.png",
-        "48": "icon.png",
-        "128": "icon.png"
+        "16": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
       }
     },
     "icons": {
-      "16": "icon.png",
-      "48": "icon.png",
-      "128": "icon.png"
+      "16": "img/icon.png",
+      "48": "img/icon.png",
+      "128": "img/icon.png"
     },
     "web_accessible_resources": [{
       "resources": ["blocked.html", "styles.css", "blocked.js", "img/*"],

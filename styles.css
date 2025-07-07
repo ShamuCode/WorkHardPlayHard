@@ -7,6 +7,11 @@ body {
   color: #1d1d1f;
 }
 
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
 .container {
   max-width: 400px;
   margin: 0 auto;
@@ -15,6 +20,11 @@ body {
   border-radius: 20px;
   box-shadow: 0 4px 14px rgb(0 0 0 / 0.1);
   text-align: center;
+}
+
+.container.dark-mode {
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
 }
 
 h1 {
@@ -40,8 +50,17 @@ button {
   width: 100%;
 }
 
+button.dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+}
+
 button:hover {
   background-color: #005bb5;
+}
+
+button.dark-mode:hover {
+  background-color: #444444;
 }
 
 input[type="text"] {
@@ -52,6 +71,12 @@ input[type="text"] {
   border: 1px solid #ccc;
   font-size: 1em;
   box-sizing: border-box;
+}
+
+input[type="text"].dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+  border: 1px solid #555555;
 }
 
 ul {
@@ -88,7 +113,25 @@ li {
   font-weight: 500;
 }
 
-/* Switch toggle Apple style */
+#modesList {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+#modesList li {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -200,4 +243,13 @@ input:checked+.slider:before {
   font-size: 0.9em;
   color: #ccc;
   text-align: center;
+}
+
+#darkModeIcon {
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+body.dark-mode #darkModeIcon {
+  color: #ffffff;
 }

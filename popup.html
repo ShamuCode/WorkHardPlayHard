@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>WorkHardPlayHard</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
   <div class="container">
-    <h1>WorkHardPlayHard</h1>
+
+    <span id="darkModeIcon" style="cursor: pointer; float: center; font-size: 2em; ">🌙</span>
+    <br>
+    <h1>
+      WorkHardPlayHard
+    </h1>
+
+    <h2>Modes</h2>
+    <select id="modeSelector">
+      <option value="None">None</option>
+      <option value="" disabled selected>Select a mode</option>
+    </select>
+
+    <hr />
 
     <label class="switch">
       <input type="checkbox" id="toggleFilter" />
@@ -38,7 +53,13 @@
 
     <hr />
 
-    <!--<h2>Importer & Exporter</h2>-->
+    <h3>Settings of the page</h3>
+    <label for="blockedImage">Display a random image:</label>
+    <input type="checkbox" id="blockedImage" />
+    <button id="saveBlockedSettings">Save the settings</button>
+
+    <hr />
+
     <h3>Import (delete the actual list)</h3>
     <h4>Whitelist</h4>
     <input type="file" id="importWhitelistInput" accept=".json" />
@@ -50,12 +71,22 @@
 
     <hr />
 
-    <h3>Settings of the page</h3>
-    <label for="blockedImage">Display a random image:</label>
-    <input type="checkbox" id="blockedImage" />
-    <button id="saveBlockedSettings">Save the settings</button>
+    <h3>Mode options</h3>
+    <input type="text" id="modeNameInput" placeholder="Enter mode name" />
+    <button id="saveModeBtn">Save Current State as Mode</button>
+    <button id="deleteModeBtn" style="background-color: #d32f2f; color: white;">Delete Mode</button>
+
+    <hr />
+
+    <h3>Export/Import Modes</h3>
+    <h4>Export</h4>
+    <button id="exportCurrentModeBtn">Export Current Mode</button>
+    <button id="exportAllModesBtn">Export All Modes</button>
+    <h4>Import</h4>
+    <input type="file" id="importModesInput" accept=".json" />
   </div>
 
   <script src="popup.js"></script>
 </body>
+
 </html>

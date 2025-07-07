@@ -72,10 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const addWhitelistBtn = document.getElementById("addWhitelistBtn");
     const disableModeBtn = document.getElementById("disableModeBtn");
+    const retryBtn = document.getElementById("retryBtn");
 
     if (isBlacklisted) {
       addWhitelistBtn.style.display = "none";
       disableModeBtn.style.display = "none";
+      retryBtn.style.display = "none";
     }
   });
 });
@@ -108,3 +110,9 @@ document.getElementById("disableModeBtn").addEventListener("click", () => {
     window.location.href = blockedUrl;
   });
 });
+
+document.getElementById("retryBtn").addEventListener("click", () => {
+  const blockedUrl = getBlockedUrl();
+  if (!blockedUrl) return alert("Error: Blocked URL not found");
+    window.location.href = blockedUrl;
+  });
