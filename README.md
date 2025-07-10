@@ -13,10 +13,10 @@
 - 🕹️ **Focus Mode**: Enable or disable the filter via a toggle switch.
 
 ## 🛠️ Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/ShamuCode/WorkHardPlayHard/
-   ```
+1. Clone the repository (or download the [latest release](https://github.com/ShamuCode/WorkHardPlayHard/archive/refs/heads/main.zip) & unzip it).
+    ```bash
+    git clone https://github.com/ShamuCode/WorkHardPlayHard/
+    ```
 2. Open Chrome and navigate to `chrome://extensions`.
 3. Enable **Developer Mode**.
 4. Click **Load unpacked extension**.
@@ -46,7 +46,6 @@
 - `background.js`: Handles navigation events.
 - `styles.css`: Styles for the extension pages.
 - `motivation.json`: List of motivational phrases.
-- `languages.json`: Multi-language support.
 - `img/`: Folder containing list of images used in the extension.
 
 ## 🤝 Contributing
